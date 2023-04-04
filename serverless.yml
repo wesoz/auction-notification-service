@@ -1,5 +1,4 @@
-service:
-  name: auction-notification-service
+service: auction-notification-service
 
 plugins:
   - serverless-bundle
@@ -11,11 +10,10 @@ provider:
   memorySize: 256
   region: eu-west-1
   stage: ${opt:stage, 'dev'}
+  iamRoleStatements:
+    - ${file(iam/SendMailIAM.yml):SendMailIAM}
   
 functions:
-  hello:
-    handler: src/handlers/hello.handler
-    events:
-      - http:
-          method: GET
-          path: /hello
+  sendMail:
+    handler: src/handlers/sendMail.handler
+
